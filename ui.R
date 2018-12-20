@@ -15,6 +15,7 @@ library(openxlsx)
 library(rmarkdown)
 library(stringr)
 library(googledrive)
+library(FinCal)
 
 shinyUI(
   # Intro, taglists e error messages colors ####
@@ -174,16 +175,16 @@ shinyUI(
                                   column(4,
                                          wellPanel(
                                            uiOutput("selec_taxa.a.a_num")
-                                         )), # Coluna taxa
+                                         ))#, # Coluna taxa
                                   
-                                  column(4,
-                                         wellPanel(
-                                           h3("Estrato"),
-                                           p("Selecione o nome da variável referente à 'Estrato'"#, 
-                                             #style = "font-family: 'Source Sans Pro';"
-                                           ),
-                                           uiOutput("selec_estrato")
-                                         ))                       
+                             #     column(4,
+                             #            wellPanel(
+                             #              h3("Estrato"),
+                              #             p("Selecione o nome da variável referente à 'Estrato'"#, 
+                              #               #style = "font-family: 'Source Sans Pro';"
+                              #             ),
+                              #             uiOutput("selec_estrato")
+                              #           ))                       
                                   
 
                                 ) # fluidRow 2 end
@@ -191,11 +192,73 @@ shinyUI(
                               ) # fluidPage 
                               
                               
-                              )#,# tabPanel Mapeamento
+                              ),# tabPanel Mapeamento
                      
                      
    
                      
+                     # VPL ####
+                     
+                     tabPanel("Análise econômica",
+                              fluidPage(
+                                
+                                h1("Análise econômica", style = "text-align: center;"),
+                                br(),
+                                
+                                DT::dataTableOutput("ana_econ_tab")
+                              )
+                            ),
+                     
+                     # navbarMenu  Download ####
+                     tabPanel("Download",
+                              # Painel Download Tabelas ####
+                              
+                              fluidPage(
+                                
+                                
+                                h1("Download dos resultados", style = "text-align: center;"),
+                                br(),
+                                
+                                
+                                tabsetPanel(
+                                  tabPanel("Download de tabelas", 
+                                           fluidPage(
+                                             
+                                             
+                                             h2("Download de tabelas", style = "text-align: center;"),
+                                             br(),
+                                             
+                                             helpText(
+                                               "Ao clicar no botão de download, você se declara de acordo com os termos descritos",
+                                               a(href="https://docs.google.com/document/d/1nvPcNTHCZJhuqsEYoHdYR9NVc44_AJuaHUynQwveVgk/edit?usp=sharing", "aqui"),
+                                               "."
+                                             ),
+                                             
+                                             fluidRow(
+                                               column(
+                                                 10
+                                                 ,uiOutput("checkbox_df_download")
+                                               )
+                                               
+                                             ),
+                                             br(),
+                                             
+                                             fluidRow(column(3,downloadButton('downloadData', 'Baixar tabelas selecionadas'), offset=4)),
+                                             br(),
+                                             
+                                             h3("Ou, para baixar todas as tabelas disponíveis, clique abaixo:"),
+                                             fluidRow(
+                                               column(3,downloadButton('downloadAllData', 'Baixar todas as tabelas'), offset=4)
+                                             )
+                                             
+                                             
+                                             
+                                           )
+                                  ) # download tabelas
+                                  
+                                )       
+                              ) # fluidPage
+                     ) # final navbarMenu download ####    
                      
                      
                      

@@ -15,6 +15,7 @@ library(openxlsx)
 library(rmarkdown)
 library(stringr)
 library(googledrive)
+library(FinCal)
 
 # functions and data ####
 source("funs/renamer.R", encoding="UTF-8")
@@ -365,6 +366,119 @@ shinyServer(function(input, output, session) {
     varnames()
     
   })
+  
+  
+  # VPL ####
+  
+  tabvpl <- reactive({
+    
+    nm <- varnames()
+    dados <- rawData_()
+    
+    validate(
+      need(dados, "Por favor faça o upload da base de dados"),
+      need(nrow(dados)>0, "Base de dados vazia"),
+      need(nm$ano,"Por favor mapeie a coluna referente a 'Ano'  "),
+      need(nm$custo,"Por favor mapeie a coluna referente a 'Custos' "),
+      need(nm$receita,"Por favor mapeie a coluna referente a 'Receitas' "),
+      need(nm$taxa.a.a,"Por favor mapeie a coluna referente a 'Taxa de juros ao ano' ")
+    )
+    
+    vpl_tir(
+      df       = dados,
+      ano      = nm$ano,
+      custo    = nm$custo,
+      receita  = nm$receita,
+      taxa_a_a = nm$taxa.a.a,
+      output   = "horizontal" )
+    
+    
+  })
+  
+  output$ana_econ_tab <- DT::renderDataTable({
+    
+    tab <- tabvpl() 
+    
+    as.datatable( formattable(tab,
+                              list(
+                                VPL = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)) ,
+                                VFL = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)),
+                                BC = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)),
+                                VET = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)),
+                                VPLA = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)),
+                                TIR = formatter("span",style = x ~ ifelse(x < 0, "color:red", NA)) )
+                              ),
+               options = list(searching = FALSE,
+                              paging=FALSE,
+                              ordering=TRUE,
+                              initComplete = JS(
+                                "function(settings, json) {",
+                                "$(this.api().table().header()).css({'background-color': '#00a90a', 'color': '#fff'});",
+                                "}")
+               )   
+    ) 
+    
+  }) 
+  
+  # Download tabelas ####
+  
+  # Cria um valor inicial zero para verificar se o usuario fez algum download ou nao.
+  # Se o usuario clicar em algum botao de download, sera add a esse valor uma unidade.
+  rnDownloads <- reactiveValues(ndown=0)
+  
+  output$checkbox_df_download <- renderUI({
+    
+    checkboxGroupInput("dataset", h3("Escolha uma ou mais tabelas, e clique no botão abaixo:"), 
+                       choices =  c(
+                         "Analise Economica"                     
+                       ), inline = T )
+    
+    
+  })
+  
+  list_of_df_to_download <- reactive({
+    
+    L <- list()
+    
+    if("Analise Economica" %in% input$dataset ) {
+      L[["Analise Economica"]] <- try( tabvpl(), silent = T) 
+    }
+    
+    # Remover dataframes que geraram errol
+    L <- L[!sapply(L, is,"try-error")]
+    
+    L
+    
+  })
+  list_of_df_all <- reactive({
+    
+    L <- list()
+    
+    L[["Analise Economica"]] <- try( tabvpl(), silent = T) 
+    
+     # Remover dataframes que geraram errol
+    L <- L[!sapply(L, is,"try-error")]
+    
+    L
+    
+  })
+  output$downloadData <- downloadHandler(
+    filename = function(){"tabelas_app_economia_forest.xlsx"},
+    
+    content = function(file){
+      rnDownloads$ndown <- rnDownloads$ndown + 1
+      suppressWarnings(openxlsx::write.xlsx( list_of_df_to_download(), file ))}
+    
+  )
+  
+  output$downloadAllData <- downloadHandler(
+    filename = function(){"tabelas_app_economia_forest.xlsx"},
+    
+    content = function(file){ 
+      rnDownloads$ndown <- rnDownloads$ndown + 1
+      suppressWarnings(openxlsx::write.xlsx( list_of_df_all(), file )) }
+    
+  )
   
   
 })
