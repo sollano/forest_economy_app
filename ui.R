@@ -108,22 +108,22 @@ shinyUI(
                                   h3("Dados"),
                                   
                                   radioButtons("df_select", 
-                                               "Fazer o upload de um arquivo, ou utilizar o dado de exemplo?", 
-                                               c("Fazer o upload",
-                                                 "Digitar dados",
+                                               "Digitar os dados, fazer o upload de um arquivo, ou utilizar o dado de exemplo?", 
+                                               c("Digitar dados",
+                                                 "Fazer o upload",
                                                  "Utilizar o dado de exemplo" ), 
-                                               selected = "Fazer o upload"),
+                                               selected = "Digitar dados"),
                                   
                                   uiOutput("upload"), # tipos de arquivos aceitos
                                   hr(),
                                   uiOutput("upload_csv"), # tipos de arquivos aceitos
                                   uiOutput("upload_xlsx"), # tipos de arquivos aceitos
-                                  uiOutput("age_range")
+                                  uiOutput("age_range"),
+                                  uiOutput("selec_taxa.a.a_num")
                                   
                                 ), # sidebarPanel
                                 
                                 mainPanel(
-                                  DT::dataTableOutput("typed_data"),
                                   DT::dataTableOutput("rawdata")
                                 ) # mainPanel
                               ) # sidebarLayout
@@ -174,10 +174,10 @@ shinyUI(
                                 
                                 fluidRow(  # fluidRow 2 start 
                                   
-                                  column(4,
-                                         wellPanel(
-                                           uiOutput("selec_taxa.a.a_num")
-                                         ))#, # Coluna taxa
+                            #      column(4,
+                           #              wellPanel(
+                            #               uiOutput("selec_taxa.a.a_num")
+                           #              ))#, # Coluna taxa
                                   
                              #     column(4,
                              #            wellPanel(

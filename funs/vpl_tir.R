@@ -1,4 +1,4 @@
-vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
+vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal",big_mark=".",dec_mark=","){
   
   # ####
   
@@ -62,6 +62,24 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
   stop("'output' must be equal to 'horizontal' or 'vertical' ", call. = F) 
   }
   
+  # Se big_mark nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( big_mark )){
+    stop( "'big_mark' must be character", call.=F)
+  }else if(length(big_mark)!=1){
+    stop("Length of 'big_mark' must be 1", call.=F)
+  }else if(! big_mark %in% c('.', ',', " ") ){ 
+  stop("'big_mark' must be equal to '.', ',' or ' ' ", call. = F) 
+  }
+  
+  # Se dec_mark nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( dec_mark )){
+    stop( "'dec_mark' must be character", call.=F)
+  }else if(length(dec_mark)!=1){
+    stop("Length of 'dec_mark' must be 1", call.=F)
+  }else if(! dec_mark %in% c('.', ',') ){ 
+  stop("'dec_mark' must be equal to '.' or ',' ", call. = F) 
+  }
+  
   # ####
   ano_name <- ano
   ano_sym <- rlang::sym(ano)
@@ -78,7 +96,7 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
       VoRT = !!receita_sym/(1+taxa_a_a/100)^(!!ano_sym), 
       VnCT = !!custo_sym*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - !!ano_sym),
       VnRT = !!receita_sym*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - !!ano_sym)) %>% 
-    dplyr::mutate_if(is.double,formattable::comma) # formatar todos os numeros que sao double
+    dplyr::mutate_if(is.double,formattable::comma,big.mark=big_mark,decimal.mark=dec_mark) # formatar todos os numeros que sao double
   
   tab1
   
@@ -96,7 +114,7 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
            BC  = VoRT_total / VoCT_total,
            VET = (VnRT_total - VnCT_total) / ((1+taxa_a_a/100)^n - 1 ),
            VPLA = ((VnRT_total - VnCT_total)*taxa_a_a/100) / ((1+taxa_a_a/100)^n - 1 ),
-           TIR = formattable::percent(tir)  ) 
+           TIR = formattable::percent(tir,decimal.mark=dec_mark)  ) 
   
   if(output=="horizontal"){
     
@@ -113,7 +131,7 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
                       #-taxa.a.a,
                       -n) %>% 
         tidyr::gather("Variável", "Valor") %>% 
-        dplyr::mutate_at(vars(Valor),formattable::comma)
+        dplyr::mutate_at(vars(Valor),formattable::comma,big.mark=big_mark,decimal.mark=dec_mark)
       
     )
     return(tab2_mod)

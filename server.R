@@ -165,10 +165,8 @@ shinyServer(function(input, output, session) {
     raw_data # tabela final a ser mostrada. 
     
   })
-  
-  
-  
-  # Fazer a tabela ser editaval apenas quando digitar dados for selecionado
+
+  # Fazer a tabela ser editaval apenas quando digitar dados for selecionado ####
   edit_boolean <- reactiveValues(edit=FALSE)
 
   observe({
@@ -180,15 +178,15 @@ shinyServer(function(input, output, session) {
     req(input$df_select!="Digitar dados")
     edit_boolean$edit <- FALSE
   })
-  
+  # rawData_ ####
   # rawData_ (com traco) sera o dado bruto sem filtro. Este dataframe sera utilizado em todo o app
   rawData_ <- reactive({
     # raw data, sera definido como o exemplo, ou o dado de upload, dependendo do usuario.
     # para evitar erros, caso seja selecionado "Fazer o upload" mas o dado ainda não tenha sido uploadado,
     # sera retornanado vazio
     switch(input$df_select, 
-           "Fazer o upload" = if(is.null(input$file1) && is.null(input$file2)){return()}else{upData()},
            "Digitar dados" = if(is.null(input$age_range)){return()}else{dig_data},
+           "Fazer o upload" = if(is.null(input$file1) && is.null(input$file2)){return()}else{upData()},
            "Utilizar o dado de exemplo" = ex1 )
   })
   
@@ -197,16 +195,18 @@ shinyServer(function(input, output, session) {
     
     validate(
       need(!is.null(rawData_()), "Please import a dataset")#,
-     # need(input$df_select != "Digitar dados", "")
       )
     
-    # salvamos a funcao newData, que contem o arquivo carregado pelo usuario em um objeto
+    # salvamos a funcao rawData_, que contem o arquivo carregado pelo usuario em um objeto
     data <- rawData_() 
     
     datatable(data,
               editable = edit_boolean$edit,
+              class = 'cell-border stripe',
               rownames = FALSE,
               options = list(
+                searching = FALSE,
+                paging=FALSE,
                 initComplete = JS(
                   "function(settings, json) {",
                   "$(this.api().table().header()).css({'background-color': '#00a90a', 'color': '#fff'});",
@@ -411,6 +411,22 @@ shinyServer(function(input, output, session) {
       taxa.a.a = input$num.taxa.a.a
     )
     
+    # esses ifs garantem que se o usuario digitar os dados,
+    # ele nao precisara de mapear variaveis, e nao precisara
+    # clicar na aba de mapeamento, indo direto para a aba de calculo
+    if(is.null(varnameslist$ano) & input$df_select == "Digitar dados"){
+      varnameslist$ano <- "Ano"
+    }
+    
+    if(is.null(varnameslist$custo) & input$df_select == "Digitar dados"){
+      varnameslist$custo <- "Custos"
+    }
+    
+    if(is.null(varnameslist$receita) & input$df_select == "Digitar dados"){
+      varnameslist$receita <- "Receitas"
+    }
+    
+    
     x <- lapply(varnameslist, function(x){if(is.null(x)){x<-""}else{x} } )   
     
     x
@@ -422,16 +438,11 @@ shinyServer(function(input, output, session) {
   })
   
   
-  
-  # Ready data e um reactive separado.
-  # por algum motivo, dig_data nao estava atualizando dentro de rawData_,
-  # entao tive que fazer esse readyData, que e basicamente um repeteco de rawData_
+  # Final Switch ####
   readyData <- reactive({
-    # raw data, sera definido como o exemplo, ou o dado de upload, dependendo do usuario.
-    # para evitar erros, caso seja selecionado "Fazer o upload" mas o dado ainda não tenha sido uploadado,
-    # sera retornanado vazio
-    print("direto de readyData")
-    print(dig_data)
+    # Ready data e um reactive separado.
+    # por algum motivo, dig_data nao estava atualizando dentro de rawData_,
+    # entao tive que fazer esse readyData, que e basicamente um repeteco de rawData_
     switch(input$df_select, 
            "Fazer o upload" = if(is.null(input$file1) && is.null(input$file2)){return()}else{rawData_()},
            "Digitar dados" = if(is.null(input$age_range)){return()}else{dig_data},
