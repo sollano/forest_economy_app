@@ -19,8 +19,9 @@ library(googledrive)
 library(FinCal)
 
 # functions and data ####
-source("funs/renamer.R", encoding="UTF-8")
-source("funs/vpl_tir.R", encoding="UTF-8")
+source("funs/check_names.R", encoding="UTF-8")
+source("funs/renamer.R"    , encoding="UTF-8")
+source("funs/vpl_tir.R"    , encoding="UTF-8")
 ex1 <- openxlsx::read.xlsx("dados.xlsx")
 
 dig_data_backup <- data.frame(Ano = seq(0, 50,by = 1), Custos = NA_real_, Receitas = NA_real_ )
