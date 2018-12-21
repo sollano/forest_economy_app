@@ -22,6 +22,8 @@ source("funs/renamer.R", encoding="UTF-8")
 source("funs/vpl_tir.R", encoding="UTF-8")
 ex1 <- openxlsx::read.xlsx("dados.xlsx")
 
+dig_data_backup <- data.frame(Ano = seq(0, 50,by = 1), Custos = NA_real_, Receitas = NA_real_ )
+dig_data <- dig_data_backup
 # vectors for names ####
 
 ano_names <- c("Ano","Anos","ANO","ANOS","ano","anos")
@@ -111,6 +113,18 @@ shinyServer(function(input, output, session) {
     
     
   })
+  output$age_range   <- renderUI({
+    
+    validate(need(input$df_select == "Digitar dados", "" )  )
+    
+    sliderInput(inputId = "age_range",
+                label = "Selecione o horizonte de planejamento",
+                min=0,
+                max=50,
+                value = c(0,7),
+                step = 1 )
+    
+  })
   
   #tabela
   upData <- reactive({ # Criamos uma nova funcao reactive. este sera o objeto filtrado, utilizado nos calculos
@@ -150,28 +164,46 @@ shinyServer(function(input, output, session) {
     
   })
   
+  
+  
+  # Fazer a tabela ser editaval apenas quando digitar dados for selecionado
+  edit_boolean <- reactiveValues(edit=FALSE)
+
+  observe({
+    req(input$df_select=="Digitar dados")
+    edit_boolean$edit <- TRUE
+  })
+  
+  observe({
+    req(input$df_select!="Digitar dados")
+    edit_boolean$edit <- FALSE
+  })
+  
   # rawData_ (com traco) sera o dado bruto sem filtro. Este dataframe sera utilizado em todo o app
   rawData_ <- reactive({
-    
     # raw data, sera definido como o exemplo, ou o dado de upload, dependendo do usuario.
     # para evitar erros, caso seja selecionado "Fazer o upload" mas o dado ainda não tenha sido uploadado,
     # sera retornanado vazio
     switch(input$df_select, 
            "Fazer o upload" = if(is.null(input$file1) && is.null(input$file2)){return()}else{upData()},
+           "Digitar dados" = if(is.null(input$age_range)){return()}else{dig_data},
            "Utilizar o dado de exemplo" = ex1 )
-    
   })
   
   # render table
   output$rawdata <- DT::renderDataTable({ # renderizamos uma DT::DataTable
     
-    validate(need(!is.null(rawData_()), "Please import a dataset"))
+    validate(
+      need(!is.null(rawData_()), "Please import a dataset")#,
+     # need(input$df_select != "Digitar dados", "")
+      )
     
     # salvamos a funcao newData, que contem o arquivo carregado pelo usuario em um objeto
     data <- rawData_() 
     
     datatable(data,
-              
+              editable = edit_boolean$edit,
+              rownames = FALSE,
               options = list(
                 initComplete = JS(
                   "function(settings, json) {",
@@ -185,6 +217,26 @@ shinyServer(function(input, output, session) {
     # aperte o botao input$columns
     
   })
+  
+  # Atualizar tabela e dig_data ####
+  proxy2 = dataTableProxy('rawdata')
+  
+  observeEvent(input$age_range,{
+    dig_data <<- dig_data_backup 
+    dig_data <<- dig_data[dig_data$Ano %in% input$age_range[1]:input$age_range[2], ]
+  })
+  
+  observeEvent(input$rawdata_cell_edit, {
+    info = input$rawdata_cell_edit
+    i = info$row
+    j = info$col + 1  # column index offset by 1
+    v = info$value
+    dig_data[i, j] <<- DT::coerceValue(v, dig_data[i, j])
+    replaceData(proxy2, dig_data, resetPaging = FALSE, rownames = FALSE)  # important
+    #print(dig_data)
+    #print(str(dig_data))
+  })
+  
   # send data ####
   send_sheet <- reactive({
     
@@ -368,12 +420,29 @@ shinyServer(function(input, output, session) {
   })
   
   
+  
+  # Ready data e um reactive separado.
+  # por algum motivo, dig_data nao estava atualizando dentro de rawData_,
+  # entao tive que fazer esse readyData, que e basicamente um repeteco de rawData_
+  readyData <- reactive({
+    # raw data, sera definido como o exemplo, ou o dado de upload, dependendo do usuario.
+    # para evitar erros, caso seja selecionado "Fazer o upload" mas o dado ainda não tenha sido uploadado,
+    # sera retornanado vazio
+    print("direto de readyData")
+    print(dig_data)
+    switch(input$df_select, 
+           "Fazer o upload" = if(is.null(input$file1) && is.null(input$file2)){return()}else{rawData_()},
+           "Digitar dados" = if(is.null(input$age_range)){return()}else{dig_data},
+           "Utilizar o dado de exemplo" = ex1 )
+  })
+  
   # VPL ####
   
   tabvpl <- reactive({
     
+    
     nm <- varnames()
-    dados <- rawData_()
+    dados <- readyData()
     
     validate(
       need(dados, "Por favor faça o upload da base de dados"),
