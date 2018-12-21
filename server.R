@@ -120,7 +120,7 @@ shinyServer(function(input, output, session) {
     validate(need(input$df_select == "Digitar dados", "" )  )
     
     sliderInput(inputId = "age_range",
-                label = "Selecione o horizonte de planejamento",
+                label = h3("Selecione o horizonte de planejamento"),
                 min=0,
                 max=50,
                 value = c(0,7),
