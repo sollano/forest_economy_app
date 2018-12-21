@@ -194,7 +194,7 @@ shinyServer(function(input, output, session) {
   output$rawdata <- DT::renderDataTable({ # renderizamos uma DT::DataTable
     
     validate(
-      need(!is.null(rawData_()), "Please import a dataset")#,
+      need(!is.null(rawData_()), "")#,
       )
     
     # salvamos a funcao rawData_, que contem o arquivo carregado pelo usuario em um objeto
@@ -205,6 +205,7 @@ shinyServer(function(input, output, session) {
               class = 'cell-border stripe',
               rownames = FALSE,
               options = list(
+                processing = FALSE,
                 searching = FALSE,
                 paging=FALSE,
                 initComplete = JS(
