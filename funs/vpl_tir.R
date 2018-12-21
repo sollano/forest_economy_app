@@ -18,8 +18,8 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
     stop("'ano' must be a character containing a variable name", call.=F)
   }else if(length(ano)!=1){
     stop("Length of 'ano' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, ano)==F){
-    stop(forestmangr::check_names(df, ano, boolean=F), call.=F)
+  }else if(check_names(df, ano)==F){
+    stop(check_names(df, ano, boolean=F), call.=F)
   }
   
   # se custo nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
@@ -29,8 +29,8 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
     stop("'custo' must be a character containing a variable name", call.=F)
   }else if(length(custo)!=1){
     stop("Length of 'custo' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, custo)==F){
-    stop(forestmangr::check_names(df, custo, boolean=F), call.=F)
+  }else if(check_names(df, custo)==F){
+    stop(check_names(df, custo, boolean=F), call.=F)
   }
   
   # se receita nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
@@ -40,8 +40,8 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal"){
     stop("'receita' must be a character containing a variable name", call.=F)
   }else if(length(receita)!=1){
     stop("Length of 'receita' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, receita)==F){
-    stop(forestmangr::check_names(df, receita, boolean=F), call.=F)
+  }else if(check_names(df, receita)==F){
+    stop(check_names(df, receita, boolean=F), call.=F)
   }
   
   # Se taxa.a.a nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
