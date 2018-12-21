@@ -1,3 +1,4 @@
+options(shiny.sanitize.errors = FALSE)
 library(shiny)
 suppressPackageStartupMessages(library(DT))
 #library(plotly)
