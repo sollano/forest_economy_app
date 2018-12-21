@@ -91,11 +91,11 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="horizontal",big_ma
   tab1 <- df %>% 
     dplyr::mutate(
       !!ano_name := as.integer(!!ano_sym), # converter pra integer, pra diferenciar dos outros numeros, que sao  double
-      saldo = !!receita_sym - !!custo_sym,
-      VoCT = !!custo_sym/(1+taxa_a_a/100)^(!!ano_sym),
-      VoRT = !!receita_sym/(1+taxa_a_a/100)^(!!ano_sym), 
-      VnCT = !!custo_sym*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - !!ano_sym),
-      VnRT = !!receita_sym*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - !!ano_sym)) %>% 
+      saldo = (!!receita_sym) - (!!custo_sym),
+      VoCT = (!!custo_sym)/(1+taxa_a_a/100)^(!!ano_sym),
+      VoRT = (!!receita_sym)/(1+taxa_a_a/100)^(!!ano_sym), 
+      VnCT = (!!custo_sym)*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - (!!ano_sym) ),
+      VnRT = (!!receita_sym)*(1+taxa_a_a/100)^(max(!!ano_sym,na.rm=TRUE) - (!!ano_sym) )) %>% 
     dplyr::mutate_if(is.double,formattable::comma,big.mark=big_mark,decimal.mark=dec_mark) # formatar todos os numeros que sao double
   
   tab1
