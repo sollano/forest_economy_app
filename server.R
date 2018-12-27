@@ -104,8 +104,15 @@ shinyServer(function(input, output, session) {
   
   
   
-  # Titulo de grafico reativo ####
+  # Titulos reativos ####
   
+  output$tabt <- renderUI({
+    
+    req(input$runButton)
+    
+    h3("Resultado da análise", style = "text-align: center;")
+    
+  })
   output$senst <- renderUI({
     
     req(input$runButton)

@@ -125,17 +125,19 @@ shinyUI(
                                             min=0,
                                             max=100
                                           ),
+                                          DT::dataTableOutput("rawdata"),
+                                          br(),
                                           actionButton("runButton", "Rodar"),
-                                          p("Clique no botão após digitar os dados para rodar a análise")
+                                          h4("Clique no botão após digitar os dados para realizar a análise")
                                           ),
                                    
                                    column(4,
-                                          DT::dataTableOutput("rawdata")
-                                          ),
+                                          uiOutput("tabt"),
+                                          br(),
+                                          DT::dataTableOutput("ana_econ_tab")
+                                         ),
                                    
                                    column(5,
-                                          DT::dataTableOutput("ana_econ_tab"),
-                                          br(),
                                           uiOutput("senst"),
                                           br(),
                                           plotOutput("sens_plot") )
