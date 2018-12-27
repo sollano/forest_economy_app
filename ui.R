@@ -75,7 +75,7 @@ shinyUI(
           
           
           # Version ####
-          navbarPage("App Economia Florestal 0.0.2",id="tab",
+          navbarPage("App Economia Florestal 0.1.0",id="tab",
                      #         ####           
                      theme = "green_yeti2.css",
                      # theme = "green.css", # seleciona um tema contido na pasta www
@@ -98,117 +98,50 @@ shinyUI(
                                ) # fluid row
                      ), # Painel Intro             
                      
-                     
-                     # Upload de dados ####
-                     tabPanel("Importação",
-                              sidebarLayout(
-                                
-                                sidebarPanel(
-                                  
-                                  h3("Dados"),
-                                  
-                                  radioButtons("df_select", 
-                                               "Digitar os dados, fazer o upload de um arquivo, ou utilizar o dado de exemplo?", 
-                                               c("Digitar dados",
-                                                 "Fazer o upload",
-                                                 "Utilizar o dado de exemplo" ), 
-                                               selected = "Digitar dados"),
-                                  
-                                  uiOutput("upload"), # tipos de arquivos aceitos
-                                  hr(),
-                                  uiOutput("upload_csv"), # tipos de arquivos aceitos
-                                  uiOutput("upload_xlsx"), # tipos de arquivos aceitos
-                                  uiOutput("age_range"),
-                                  uiOutput("selec_taxa.a.a_num")
-                                  
-                                ), # sidebarPanel
-                                
-                                mainPanel(
-                                  DT::dataTableOutput("rawdata")
-                                ) # mainPanel
-                              ) # sidebarLayout
-                     ),
-                     
-                     # Mapeamento ####
-                     tabPanel("Mapeamento de variáveis",
-                              fluidPage(
-                                
-                                #h1("Shiny", span("Widgets Gallery", style = "font-weight: 300"), 
-                                h1("Definição dos nomes das variáveis", 
-                                   style = "text-align: center;"),
-                                br(),
-                                
-                                #  h4("Nesta aba serão indicados os nomes das colunas que serão utilizadas nas análises em todo o app"),
-                                
-                                fluidRow( # fluidRow 1 start
-                                  column(4,
-                                         wellPanel(
-                                           h3("Ano*"),
-                                           p("Selecione o nome da variável referente à 'Ano':"#, 
-                                             #style = "font-family: 'Source Sans Pro';"
-                                           ),
-                                           uiOutput("selec_ano")
-                                         )), # Coluna ano
-                                  
-                                  
-                                  column(4,
-                                         wellPanel(
-                                           h3("Custos*"),
-                                           p("Selecione o nome da variável referente à 'Custos':"#, 
-                                             #style = "font-family: 'Source Sans Pro';"
-                                           ),
-                                           uiOutput("selec_custo")
-                                         )), # coluna custo
-                                  
-                                  column(4,
-                                         wellPanel(
-                                           h3("Receitas*"),
-                                           p("Selecione o nome da variável referente à 'Receitas':"#, 
-                                             #style = "font-family: 'Source Sans Pro';"
-                                           ),
-                                           uiOutput("selec_receita")
-                                         )) # Coluna receita,
-                                  
-                                  
-                                ), # fluidRow 1 end
-                                
-                                fluidRow(  # fluidRow 2 start 
-                                  
-                            #      column(4,
-                           #              wellPanel(
-                            #               uiOutput("selec_taxa.a.a_num")
-                           #              ))#, # Coluna taxa
-                                  
-                             #     column(4,
-                             #            wellPanel(
-                             #              h3("Estrato"),
-                              #             p("Selecione o nome da variável referente à 'Estrato'"#, 
-                              #               #style = "font-family: 'Source Sans Pro';"
-                              #             ),
-                              #             uiOutput("selec_estrato")
-                              #           ))                       
-                                  
-
-                                ) # fluidRow 2 end
-
-                              ) # fluidPage 
-                              
-                              
-                              ),# tabPanel Mapeamento
-                     
-                     
-   
-                     
                      # VPL ####
                      
                      tabPanel("Análise econômica",
                               fluidPage(
-                                
-                                h1("Análise econômica", style = "text-align: center;"),
-                                br(),
-                                
-                                DT::dataTableOutput("ana_econ_tab")
+                                fluidRow(
+                                   h1("Análise econômica", style = "text-align: center;"),
+                                   br()),
+                                 fluidRow(
+                                   
+                                   column(3,
+                                          
+                                          h3("Horizonte de planejamento"),
+                                          
+                                          
+                                          uiOutput("ager"),
+                                          
+                                          h3("Taxa de juros ao ano"),
+                                          
+                                          
+                                          numericInput( # cria uma lista de opcoes em que o usuario pode clicar
+                                            'num.taxa.a.a', # Id
+                                            "Insira o valor da taxa de juros ao ano (%)", # nome que sera mostrado na UI
+                                            value = "8.75", 
+                                            step = 0.1,
+                                            min=0,
+                                            max=100
+                                          ),
+                                          actionButton("runButton", "Rodar"),
+                                          p("Clique no botão após digitar os dados para rodar a análise")
+                                          ),
+                                   
+                                   column(4,
+                                          DT::dataTableOutput("rawdata")
+                                          ),
+                                   
+                                   column(5,
+                                          DT::dataTableOutput("ana_econ_tab"),
+                                          br(),
+                                          uiOutput("senst"),
+                                          br(),
+                                          plotOutput("sens_plot") )
                               )
+                              
+                              )#fluidPage
                             ),
                      
                      # navbarMenu  Download ####
@@ -217,48 +150,50 @@ shinyUI(
                               
                               fluidPage(
                                 
+                                fluidRow(
+                                h1("Downloads", style = "text-align: center;"),
+                                br()),
                                 
-                                h1("Download dos resultados", style = "text-align: center;"),
+                                
+                                fluidRow(
+                                            
+                                              
+                                h2("Download de tabelas", style = "text-align: left;"),
                                 br(),
+                                             
+                                helpText(
+                                "Ao clicar no botão de download, você se declara de acordo com os termos descritos",
+                                a(href="https://docs.google.com/document/d/1nvPcNTHCZJhuqsEYoHdYR9NVc44_AJuaHUynQwveVgk/edit?usp=sharing", "aqui"),
+                                "."
+                                )),
+                                             
+                                fluidRow(
+                                  h3("Para baixar a tabela de resultados, clique no botão abaixo"),
+                                  downloadButton('downloadAllData', 'Baixar resultados') 
+                                ),
                                 
-                                
-                                tabsetPanel(
-                                  tabPanel("Download de tabelas", 
-                                           fluidPage(
-                                             
-                                             
-                                             h2("Download de tabelas", style = "text-align: center;"),
-                                             br(),
-                                             
-                                             helpText(
-                                               "Ao clicar no botão de download, você se declara de acordo com os termos descritos",
-                                               a(href="https://docs.google.com/document/d/1nvPcNTHCZJhuqsEYoHdYR9NVc44_AJuaHUynQwveVgk/edit?usp=sharing", "aqui"),
-                                               "."
-                                             ),
-                                             
-                                             fluidRow(
-                                               column(
-                                                 10
-                                                 ,uiOutput("checkbox_df_download")
-                                               )
-                                               
-                                             ),
-                                             br(),
-                                             
-                                             fluidRow(column(3,downloadButton('downloadData', 'Baixar tabelas selecionadas'), offset=4)),
-                                             br(),
-                                             
-                                             h3("Ou, para baixar todas as tabelas disponíveis, clique abaixo:"),
-                                             fluidRow(
-                                               column(3,downloadButton('downloadAllData', 'Baixar todas as tabelas'), offset=4)
-                                             )
-                                             
-                                             
-                                             
-                                           )
-                                  ) # download tabelas
+                                fluidRow(
                                   
-                                )       
+                                  
+                                  h2("Download de Gráficos", style = "text-align: left;"),
+                                  h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, e clique no botão abaixo"),
+                                  selectInput("graphformat",
+                                              "Escolha o formato do gráfico:",
+                                              choices = c("PNG" = ".png",
+                                                          "JPG" = ".jpg",
+                                                          "PDF" = ".pdf") ),
+                                  
+                                  downloadButton('downloadGraph', 'Baixar gráfico')
+                                  )
+                                
+                                
+                                             
+                                             
+                                             
+                                    
+                                  
+                                  
+                                     
                               ) # fluidPage
                      ) # final navbarMenu download ####    
                      
