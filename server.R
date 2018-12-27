@@ -151,7 +151,7 @@ shinyServer(function(input, output, session) {
                               ),
                options = list(searching = FALSE,
                               paging=FALSE,
-                              ordering=TRUE,
+                              ordering=FALSE,
                               info = FALSE,
                               initComplete = JS(
                                 "function(settings, json) {",
