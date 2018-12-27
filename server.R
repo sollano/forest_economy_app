@@ -473,7 +473,7 @@ shinyServer(function(input, output, session) {
       custo    = nm$custo,
       receita  = nm$receita,
       taxa_a_a = nm$taxa.a.a,
-      output   = "horizontal" )
+      output   = "simple" )
     
     
   })
