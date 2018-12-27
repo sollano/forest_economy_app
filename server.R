@@ -110,7 +110,7 @@ shinyServer(function(input, output, session) {
     
     req(input$runButton)
     
-    h3("Análise de sensibilidade")
+    h3("Análise de sensibilidade", style = "text-align: center;")
     
   })
   

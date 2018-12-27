@@ -151,21 +151,20 @@ shinyUI(
                               fluidPage(
                                 
                                 fluidRow(
-                                h1("Downloads", style = "text-align: center;"),
-                                br()),
-                                
+                                h1("Downloads", style = "text-align: center;")
+                                ),
                                 
                                 fluidRow(
-                                            
-                                              
-                                h2("Download de tabelas", style = "text-align: left;"),
-                                br(),
+
+                                h2("Download de tabelas", style = "text-align: left;")#,
+                               # br(),
                                              
-                                helpText(
-                                "Ao clicar no botão de download, você se declara de acordo com os termos descritos",
-                                a(href="https://docs.google.com/document/d/1nvPcNTHCZJhuqsEYoHdYR9NVc44_AJuaHUynQwveVgk/edit?usp=sharing", "aqui"),
-                                "."
-                                )),
+                               # helpText(
+                               # "Ao clicar no botão de download, você se declara de acordo com os termos descritos",
+                               # a(href="https://docs.google.com/document/d/1nvPcNTHCZJhuqsEYoHdYR9NVc44_AJuaHUynQwveVgk/edit?usp=sharing", "aqui"),
+                               # "."
+                               # )
+                                ),
                                              
                                 fluidRow(
                                   h3("Para baixar a tabela de resultados, clique no botão abaixo"),
@@ -173,8 +172,7 @@ shinyUI(
                                 ),
                                 
                                 fluidRow(
-                                  
-                                  
+
                                   h2("Download de Gráficos", style = "text-align: left;"),
                                   h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, e clique no botão abaixo"),
                                   selectInput("graphformat",
