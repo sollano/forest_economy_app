@@ -15,3 +15,5 @@
 
 planilhas_grad/
 .Rproj.user
+
+googlesheets_token.rds
