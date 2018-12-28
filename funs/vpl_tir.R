@@ -1,4 +1,4 @@
-vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="full", big_mark=".",dec_mark=",", prefix="R$"){
+vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="full", sens_limits = c(1,30),big_mark=".",dec_mark=",", prefix="R$"){
   
   # ####
   
@@ -156,7 +156,8 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="full", big_mark=".
     )
     
     # sensibilidade ####
-    plot_data <- data.frame(x_axis = seq(0.01, round(taxa_a_a/100*10)/10 +0.2, 0.01) ) %>%
+
+    plot_data <- data.frame(x_axis = seq(sens_limits[1]/100,sens_limits[2]/100, 0.01) ) %>%
       dplyr::mutate(
         VPR = purrr::map_dbl(x_axis, ~sum(df[[receita]] / (1 + .x)^df[[ano]],na.rm=T)),
         VPC = purrr::map_dbl(x_axis, ~sum(df[[custo]] / (1 + .x)^df[[ano]],na.rm=T)),

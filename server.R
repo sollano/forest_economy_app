@@ -20,12 +20,12 @@ library(FinCal)
 library(shinycssloaders)
 
 # functions and data ####
-source("funs/check_names.R", encoding="UTF-8")
-source("funs/renamer.R"    , encoding="UTF-8")
+#source("funs/check_names.R", encoding="UTF-8")
+#source("funs/renamer.R"    , encoding="UTF-8")
 source("funs/vpl_tir.R"    , encoding="UTF-8")
-ex1 <- openxlsx::read.xlsx("dados.xlsx")
+#ex1 <- openxlsx::read.xlsx("dados.xlsx")
 
-dig_data_backup <- data.frame(Ano = seq(0, 50,by = 1), Custos = NA_real_, Receitas = NA_real_ )
+dig_data_backup <- data.frame(Ano = seq(0, 100,by = 1), Custos = NA_real_, Receitas = NA_real_ )
 dig_data <- dig_data_backup
 # vectors for names ####
 
@@ -155,12 +155,13 @@ shinyServer(function(input, output, session) {
     #req(!all(is.na(dados$Receitas)))
     
     vpl_tir(
-      df       = dados,
-      ano      = "Ano",
-      custo    = "Custos",
-      receita  = "Receitas",
-      taxa_a_a = input$num.taxa.a.a,
-      output   = "full" )
+      df          = dados,
+      ano         = "Ano",
+      custo       = "Custos",
+      receita     = "Receitas",
+      taxa_a_a    = input$num.taxa.a.a,
+      output      = "full",
+      sens_limits = input$sens.lims.slider )
     
     
   })
@@ -278,7 +279,7 @@ shinyServer(function(input, output, session) {
     content = function(file) {
       rnDownloads$ndown <- rnDownloads$ndown + 1
       
-      ggsave(file, vplfunc()[[1]], width = 12, height = 10 )
+      ggsave(file, vplfunc()[[1]], width = input$width_plot, height = input$height_plot, dpi = input$dpi_plot, units="cm" )
       
       
     }

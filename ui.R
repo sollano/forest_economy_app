@@ -119,16 +119,23 @@ shinyUI(
                                                                         label = "Fim",
                                                                         value = 7,
                                                                         min=1,
-                                                                        max=50)))   ,
+                                                                        max=100)))   ,
                                           
                                           h3("Taxa de juros ao ano"),
                                           
-                                          sliderInput(inputId = "num.taxa.a.a",
+                                          numericInput(inputId = "num.taxa.a.a",
                                                       label = "Selecione o valor da taxa de juros ao ano (%)",
                                                       min=0,
-                                                      max=30,
+                                                      max=100,
                                                       value = 8.75,
                                                       step = 0.05 ),
+                                          
+                                          sliderInput(inputId="sens.lims.slider",
+                                                      label = "Selecione os limites da taxa para a análise de sensibilidade (%)",
+                                                      min=0,
+                                                      max=100,
+                                                      value = c(1,30),
+                                                      step = 1 ),
 
                                           DT::dataTableOutput("rawdata"),
                                           br(),
@@ -153,8 +160,7 @@ shinyUI(
                      
                      # navbarMenu  Download ####
                      tabPanel("Download",
-                              # Painel Download Tabelas ####
-                              
+
                               fluidPage(
                                 
                                 fluidRow(
@@ -181,15 +187,36 @@ shinyUI(
                                 fluidRow(
 
                                   h2("Download de Gráficos", style = "text-align: left;"),
-                                  h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, e clique no botão abaixo"),
-                                  selectInput("graphformat",
-                                              "Escolha o formato do gráfico:",
-                                              choices = c("PNG" = ".png",
-                                                          "JPG" = ".jpg",
-                                                          "PDF" = ".pdf") ),
-                                  
-                                  downloadButton('downloadGraph', 'Baixar gráfico')
-                                  )
+                                  h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, a resolução (em cm), o dpi, e clique no botão abaixo:"),
+
+                                    column(2,selectInput("graphformat",
+                                                         "Formato:",
+                                                         choices = c("PNG" = ".png",
+                                                                     "JPG" = ".jpg",
+                                                                     "PDF" = ".pdf") ) ),
+                                    
+                                    column(2, numericInput(inputId="width_plot",
+                                                           label = "Largura",
+                                                           value = 30,
+                                                           min=5,
+                                                           max=100
+                                    ))  ,
+                                    column(2, numericInput(inputId="height_plot",
+                                                           label = "Altura",
+                                                           value = 25,
+                                                           min=5,
+                                                           max=100)),
+                                    
+                                    column(2, numericInput(inputId="dpi_plot",
+                                                           label = "dpi",
+                                                           value = 300,
+                                                           min=10,
+                                                           max=1000))
+                                         ),
+                               
+                               fluidRow(
+                                 downloadButton('downloadGraph', 'Baixar gráfico')
+                               )
                                 
                                 
                                              
