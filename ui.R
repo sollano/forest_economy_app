@@ -8,7 +8,7 @@ library(tibble)
 library(tidyr)
 suppressPackageStartupMessages(library(dplyr))
 library(lazyeval)
-library(ggplot2)
+suppressPackageStartupMessages(library(ggplot2))
 library(ggdendro)
 library(ggthemes)
 library(openxlsx)
@@ -106,25 +106,30 @@ shinyUI(
                                    h1("Análise econômica", style = "text-align: center;"),
                                    br()),
                                  fluidRow(
-                                   
                                    column(3,
-                                          
                                           h3("Horizonte de planejamento"),
-                                          
-                                          
-                                          uiOutput("ager"),
+                                            fluidRow(  
+                                                 column(4, numericInput(inputId="age_start",
+                                                                        label = "Inicio",
+                                                                        value = 0,
+                                                                        min=0,
+                                                                        max=50
+                                                 ))  ,
+                                                 column(4, numericInput(inputId="age_end",
+                                                                        label = "Fim",
+                                                                        value = 7,
+                                                                        min=1,
+                                                                        max=50)))   ,
                                           
                                           h3("Taxa de juros ao ano"),
                                           
-                                          
-                                          numericInput( # cria uma lista de opcoes em que o usuario pode clicar
-                                            'num.taxa.a.a', # Id
-                                            "Insira o valor da taxa de juros ao ano (%)", # nome que sera mostrado na UI
-                                            value = "8.75", 
-                                            step = 0.1,
-                                            min=0,
-                                            max=100
-                                          ),
+                                          sliderInput(inputId = "num.taxa.a.a",
+                                                      label = "Selecione o valor da taxa de juros ao ano (%)",
+                                                      min=0,
+                                                      max=30,
+                                                      value = 8.75,
+                                                      step = 0.05 ),
+
                                           DT::dataTableOutput("rawdata"),
                                           br(),
                                           actionButton("runButton", "Rodar"),
@@ -134,13 +139,13 @@ shinyUI(
                                    column(4,
                                           uiOutput("tabt"),
                                           br(),
-                                          DT::dataTableOutput("ana_econ_tab")
+                                          shinycssloaders::withSpinner(DTOutput("ana_econ_tab"),3,color="#00a90a",color.background="#ffffff")  
                                          ),
                                    
                                    column(5,
                                           uiOutput("senst"),
                                           br(),
-                                          plotOutput("sens_plot") )
+                                          shinycssloaders::withSpinner(plotOutput("sens_plot"),3,color="#00a90a",color.background="#ffffff") )
                               )
                               
                               )#fluidPage

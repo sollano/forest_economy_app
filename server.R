@@ -9,7 +9,7 @@ library(tibble)
 library(tidyr)
 suppressPackageStartupMessages(library(dplyr))
 library(lazyeval)
-library(ggplot2)
+suppressPackageStartupMessages(library(ggplot2))
 library(ggdendro)
 library(ggthemes)
 library(openxlsx)
@@ -17,6 +17,7 @@ library(rmarkdown)
 library(stringr)
 library(googledrive)
 library(FinCal)
+library(shinycssloaders)
 
 # functions and data ####
 source("funs/check_names.R", encoding="UTF-8")
@@ -37,28 +38,51 @@ estratos_names <- c("TALHAO", "Talhao", "talhao","COD_TALHAO","Cod_Talhao","cod_
 
 shinyServer(function(input, output, session) {
   
-  # ui
-  output$ager <- renderUI({
-    
-    sliderInput(inputId = "age_range",
-                label = "Selecione o horizonte de planejamento",
-                min=0,
-                max=50,
-                value = c(0,7),
-                step = 1 )
-    
-  })
-  
   # Atualizar tabela e dig_data ####
   proxy2 = dataTableProxy('rawdata')
   
-  observe({
-    invalidateLater(500)
-  })  
-  
-  observeEvent(input$age_range,{
+  observeEvent(input$age_start,{
+    
+    if(is.null(input$age_start)|is.na(input$age_start)|input$age_start==""){
+      age.start <- 0
+    }else{
+      age.start <- input$age_start
+    }
+    
+    
+    if(is.null(input$age_end)|is.na(input$age_end)|input$age_end==""){
+      age.end <- 1
+    }else{
+      age.end <- input$age_end
+    }
+    
     dig_data <<- dig_data_backup 
-    dig_data <<- dig_data[dig_data$Ano %in% input$age_range[1]:input$age_range[2], ]
+    dig_data <<- dig_data[dig_data$Ano %in% age.start:age.end, ]
+    
+    # Replace data que realmente atualiza o data frame... sem ele nao funciona
+    replaceData(proxy2, dig_data, resetPaging = FALSE, rownames = FALSE)  # important
+    
+    
+  }, priority = 2)
+  
+  observeEvent(input$age_end,{
+    
+    if(is.null(input$age_start)|is.na(input$age_start)|input$age_start==""){
+      age.start <- 0
+    }else{
+      age.start <- input$age_start
+    }
+    
+    
+    if(is.null(input$age_end)|is.na(input$age_end)|input$age_end==""){
+      age.end <- 1
+    }else{
+      age.end <- input$age_end
+    }
+    
+    dig_data <<- dig_data_backup 
+    dig_data <<- dig_data[dig_data$Ano %in% age.start:age.end, ]
+
     # Replace data que realmente atualiza o data frame... sem ele nao funciona
     replaceData(proxy2, dig_data, resetPaging = FALSE, rownames = FALSE)  # important
     
@@ -141,7 +165,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$ana_econ_tab <- DT::renderDataTable({
+  output$ana_econ_tab <- DT::renderDT({
     
     tab <- vplfunc()[[2]] 
     
