@@ -14,6 +14,12 @@ vpl_tir(dados2,"ano","custos","receitas",taxa_a_a=10, "full")
 npv_irr(dados,"ano","custos","receitas",rate=8.75, "full")
 
 
+
+vpl_tir(dados,"ano","custos","receitas",taxa_a_a=8.75, sens_limits = c(1,30))
+
+
+
+
 npv_irr(data_ex,"year","cost","revenue",rate=8.75)
 npv_irr(data_ex,"year","cost","revenue",rate=8.75, "simple")
 npv_irr(data_ex,"year","cost","revenue",rate=8.75, "full")

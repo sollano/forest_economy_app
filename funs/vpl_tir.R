@@ -62,6 +62,19 @@ vpl_tir <- function(df, ano, custo, receita, taxa_a_a,output="full", sens_limits
   stop("'output' must be equal to 'simple' or 'full' ", call. = F) 
   }
   
+  # Se sens_limits nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
+  if(!is.numeric( sens_limits )){
+    stop( "'sens_limits' must be numeric", call.=F)
+  }else if(length(sens_limits)!=2){
+    stop("length of 'sens_limits' must be 2", call.=F)
+  }else if(! sens_limits[1] >= 0 | ! sens_limits[1] <= 100){
+    stop("'sens_limits' first element must be a number between 0 and 100", call.=F)
+  }else if(! sens_limits[2] >= 0 | ! sens_limits[2] <= 100){
+    stop("'sens_limits' second element must be a number between 0 and 100", call.=F)
+  }else if(sens_limits[1] > sens_limits[2]){
+    stop("'sens_limits' first element cannot be greater than the second", call.=F)
+  }
+  
   # Se big_mark nao for character,ou nao for de tamanho 1, parar
   if(!is.character( big_mark )){
     stop( "'big_mark' must be character", call.=F)
