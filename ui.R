@@ -180,7 +180,7 @@ shinyUI(
                                 ),
                                              
                                 fluidRow(
-                                  h3("Para baixar a tabela de resultados, clique no botão abaixo"),
+                                  h3("Para baixar a tabela de resultados, clique no botão abaixo:"),
                                   downloadButton('downloadAllData', 'Baixar resultados') 
                                 ),
                                 
