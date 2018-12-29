@@ -75,7 +75,7 @@ shinyUI(
           
           
           # Version ####
-          navbarPage("App Economia Florestal 0.1.0",id="tab",
+          navbarPage("App Economia Florestal 0.2.0",id="tab",
                      #         ####           
                      theme = "green_yeti2.css",
                      # theme = "green.css", # seleciona um tema contido na pasta www
@@ -90,7 +90,7 @@ shinyUI(
                                  column(6,
                                         img(contentType = "image/jpg",
                                             src="intro_picture.jpg",
-                                            width = 770,
+                                            width = 800,
                                             #           height = 750)
                                             height = 856)
                                         
@@ -108,18 +108,12 @@ shinyUI(
                                  fluidRow(
                                    column(3,
                                           h3("Horizonte de planejamento"),
-                                            fluidRow(  
-                                                 column(4, numericInput(inputId="age_start",
-                                                                        label = "Inicio",
-                                                                        value = 0,
-                                                                        min=0,
-                                                                        max=50
-                                                 ))  ,
-                                                 column(4, numericInput(inputId="age_end",
-                                                                        label = "Fim",
-                                                                        value = 7,
-                                                                        min=1,
-                                                                        max=100)))   ,
+
+                                          numericInput(inputId="age_end",
+                                                       label = NULL,
+                                                       value = 7,
+                                                       min=1,
+                                                       max=100),
                                           
                                           h3("Taxa de juros ao ano"),
                                           
@@ -187,7 +181,7 @@ shinyUI(
                                 fluidRow(
 
                                   h2("Download de Gráficos", style = "text-align: left;"),
-                                  h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, a resolução (em cm), o dpi, e clique no botão abaixo:"),
+                                  h3("Para baixar o gráfico de sensibilidade, selecione o formato desejado, a resolução (cm), o dpi, e clique no botão abaixo:"),
 
                                     column(2,selectInput("graphformat",
                                                          "Formato:",

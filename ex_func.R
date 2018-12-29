@@ -17,7 +17,15 @@ npv_irr(dados,"ano","custos","receitas",rate=8.75, "full")
 
 vpl_tir(dados,"ano","custos","receitas",taxa_a_a=8.75, sens_limits = c(1,30))
 
+test <- npv_irr(dados,"ano","custos","receitas",rate=8.75, "full")[[2]]
+test$Value <- as.numeric(test$Value)
+test
 
+lista <- list()
+
+lista[["asd"]] <- test
+lista[["asd"]]$Value <- as.numeric(lista[["asd"]]$Value)
+lista
 
 
 npv_irr(data_ex,"year","cost","revenue",rate=8.75)

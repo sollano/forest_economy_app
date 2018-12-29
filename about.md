@@ -2,7 +2,8 @@
 # App Economia Florestal
 
 <div style="text-align:justify">
-asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa asdasdasdsa .
+Shiny app desenvolvido para realizar análises financeiras. 
+Este app está sendo desenvolvido no treelab, UFVJM. Versão beta.
 
 </div>
 

@@ -41,39 +41,8 @@ shinyServer(function(input, output, session) {
   # Atualizar tabela e dig_data ####
   proxy2 = dataTableProxy('rawdata')
   
-  observeEvent(input$age_start,{
-    
-    if(is.null(input$age_start)|is.na(input$age_start)|input$age_start==""){
-      age.start <- 0
-    }else{
-      age.start <- input$age_start
-    }
-    
-    
-    if(is.null(input$age_end)|is.na(input$age_end)|input$age_end==""){
-      age.end <- 1
-    }else{
-      age.end <- input$age_end
-    }
-    
-    dig_data <<- dig_data_backup 
-    dig_data <<- dig_data[dig_data$Ano %in% age.start:age.end, ]
-    
-    # Replace data que realmente atualiza o data frame... sem ele nao funciona
-    replaceData(proxy2, dig_data, resetPaging = FALSE, rownames = FALSE)  # important
-    
-    
-  }, priority = 2)
-  
   observeEvent(input$age_end,{
     
-    if(is.null(input$age_start)|is.na(input$age_start)|input$age_start==""){
-      age.start <- 0
-    }else{
-      age.start <- input$age_start
-    }
-    
-    
     if(is.null(input$age_end)|is.na(input$age_end)|input$age_end==""){
       age.end <- 1
     }else{
@@ -81,7 +50,7 @@ shinyServer(function(input, output, session) {
     }
     
     dig_data <<- dig_data_backup 
-    dig_data <<- dig_data[dig_data$Ano %in% age.start:age.end, ]
+    dig_data <<- dig_data[dig_data$Ano %in% 0:age.end, ]
 
     # Replace data que realmente atualiza o data frame... sem ele nao funciona
     replaceData(proxy2, dig_data, resetPaging = FALSE, rownames = FALSE)  # important
@@ -216,6 +185,8 @@ shinyServer(function(input, output, session) {
     
     if("Analise Economica" %in% input$dataset ) {
       L[["Analise Economica"]] <- try( vplfunc()[[2]], silent = T) 
+      L[["Analise Economica"]][,2] <- try(as.numeric(L[["Analise Economica"]][,2]), silent=T)
+      
     }
     
     # Remover dataframes que geraram errol
@@ -229,8 +200,9 @@ shinyServer(function(input, output, session) {
     L <- list()
     
     L[["Analise Economica"]] <- try( vplfunc()[[2]], silent = T) 
+    L[["Analise Economica"]][,2] <- try(as.numeric(L[["Analise Economica"]][,2]), silent=T)
     
-     # Remover dataframes que geraram errol
+    # Remover dataframes que geraram errol
     L <- L[!sapply(L, is,"try-error")]
     
     L
