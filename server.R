@@ -72,7 +72,7 @@ shinyServer(function(input, output, session) {
         mes = format(systime, "%B"),
         ano = format(systime, "%Y"),
         hora=format(systime, "%X") ) %>% 
-      select(app,ip,data,hora,region_name,region_code,country_code,isp,latitude,longitude,organisation,timezone,zip_code,status,hash,dia,mes,ano)
+      select(app,ip,data,hora,region_name,region_code,country_code,isp,latitude,longitude,organisation,timezone,zip_code,status,hash,dia,mes,ano, city_name)
     
     gs_add_row(gs_title("app_logs",verbose=FALSE), 
                ws = 1,
