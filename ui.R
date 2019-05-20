@@ -19,6 +19,7 @@ library(FinCal)
 library(shinycssloaders)
 library(googlesheets)
 library(rgeolocate)
+library(shinyalert)
 
 inputUserid <- function(inputId, value='') {
   #   print(paste(inputId, "=", value))
@@ -204,7 +205,10 @@ shinyUI(
                                              
                                 fluidRow(
                                   h3("Para baixar a tabela de resultados, clique no botão abaixo:"),
-                                  downloadButton('downloadAllData', 'Baixar resultados') 
+                                  downloadButton('downloadAllData', 'Baixar resultados'),
+                                  
+                                  shinyalert::useShinyalert()
+                                  
                                 ),
                                 
                                 fluidRow(

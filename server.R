@@ -212,6 +212,30 @@ shinyServer(function(input, output, session) {
   # Se o usuario clicar em algum botao de download, sera add a esse valor uma unidade.
   rnDownloads <- reactiveValues(ndown=0)
   
+  # Codigo para criar um poppup (modal)
+  
+  # Iremos observar o botao de download.
+  # Como shiny nao permite que observemos o botao de download diretamente,
+  #iremos observar o objeto rnDownloads, que tera seu valor alterado sempre que um download for feito.
+  
+  # a funcao de javascript abaixo direciona o usuario ao link de doacao, caso ele clique em ok
+  
+  #print(rnDownloads$ndown)
+  
+  observeEvent(rnDownloads$ndown, {
+    # Show a modal when the button is pressed
+    shinyalert::shinyalert("Obrigado!", 
+                           "Se esse app lhe foi útil, por favor considere fazer uma doação para nos ajudar a manter esse projeto no ar!",
+                           type = "success",
+                           closeOnEsc = TRUE,
+                           callbackJS = "function(x) { if (x > 0) { window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JVF7VGRMANRC6&source=url') ; } }",
+                           closeOnClickOutside = FALSE,
+                           showCancelButton = TRUE,
+                           cancelButtonText = ":(",
+                           confirmButtonText = "Doar!") }, ignoreInit = TRUE)
+  
+  
+  
   output$checkbox_df_download <- renderUI({
     
     checkboxGroupInput("dataset", h3("Escolha uma ou mais tabelas, e clique no botão abaixo:"), 
