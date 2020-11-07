@@ -1,19 +1,33 @@
 
 # App Economia Florestal
 
+### Ajude o nosso projeto a se manter no ar!
+
 <div style="text-align:justify">
-Shiny app desenvolvido para realizar análises financeiras. 
-Este app está sendo desenvolvido no treelab, UFVJM. Versão beta.
+O projeto foi criado com o intuito de ajudar a comunidade florestal. Para continuarmos a mantê-lo de forma gratuita a todos,
+precisamos de doações para cobrir os custos do servidor que mantêm o app disponível. Sua contribuição é de grande ajuda.
+</div>
+
+
+## Apoiadores do Mês de Novembro:
+
+<div><p style="float:left;">
+
+<p><font size="5"> Mariana Miranda Andrade </a></font></p>
+
+<p><font size="5"> Múcio Nepomuceno </a></font></p>
+
+<p><font size="5"> Rauff Barbosa </a></font></p>
+
+<p><font size="5"> Karizen Patriota </a></font></p>
+
+<p><font size="5"> Fernanda Luiza Silva de Oliveira </a></font></p>
+
+<p><font size="5"> Jorge Luiz Mainart </a></font></p>
 
 </div>
 
-## Ajude esse projeto a se manter no ar!
-
-<div style="text-align:justify">
-Esse projeto foi criado com o intuito de ajudar a comunidade florestal. Para continuarmos a mantê-lo de forma gratuita a todos,
-precisamos de doações para cobrir os custos do servidor que mantêm esse aplicativo no ar. Sua contribução é de grande ajuda.
-Para doar, basta clicar no botão abaixo:
-</div>
+<p><font size="3">  Para contribuir com o nosso projeto, basta clicar no botão abaixo!</font></p>
 
 <div style="text-align:center">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -25,15 +39,15 @@ Para doar, basta clicar no botão abaixo:
 </div>
 
 Conheça nossos outros projetos:
-[App Inventário de Nativas](http://34.234.76.169/shiny/nativas_app/),
-[App Inventário Florestal](http://34.234.76.169/shiny/inventario_app/),
-[App Cubagem](http://34.234.76.169/shiny/cubagem_app/),
-[App F de Graybill](http://34.234.76.169/shiny/graybill_app/),
+[App Inventário de Nativas](http://52.87.251.141/shiny/nativas_app/),
+[App Inventário Florestal](http://52.87.251.141/shiny/inventario_app/),
+[App Cubagem](http://52.87.251.141/shiny/cubagem_app/),
+[App F de Graybill](http://52.87.251.141/shiny/graybill_app/),
 [R package: forestmangr](https://github.com/sollano/forestmangr#readme)
 
 #### Script criado por:
 
-[Sollano Rabelo Braga](http://lattes.cnpq.br/7271838547135276 "Curriculum Lattes"), [Eric Bastos Gorgens](http://lattes.cnpq.br/2266409430041146 "Curriculum Lattes") 
+[Sollano Rabelo Braga](http://lattes.cnpq.br/7271838547135276 "Curriculum Lattes")
 
 #### Para citar e referenciar este app, utilize:
 
@@ -41,10 +55,3 @@ Conheça nossos outros projetos:
 
 BRAGA, S. R.; GORGENS, E. B; OLIVEIRA, M. L. R. DE. App Economia Florestal: Aplicativo shiny para processamento de dados de economia florestal, 2019. Disponível em: <https://sites.google.com/view/forestsuite/home>.
 
-
-<div style="text-align:right">
-<a href="http://www.ufvjm.edu.br/"><img src="www/UFVJM_logo2.png" width="50" height="50"/></a>
-<img src="www/EF_logo.png" width="50" height="50" />
-<a href="https://sites.google.com/view/forestsuite/home"><img src="www/LAB_logo.png" width="50" height="50" /></a>
-<a href="http://marcioromarco.webnode.com/"><img src="www/GEMMF_logo2.png" width="50" height="50"/> </a>
-</div>
