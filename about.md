@@ -38,6 +38,12 @@ precisamos de doações para cobrir os custos do servidor que mantêm o app disp
 </form>
 </div>
 
+## Sobre:
+<div style="text-align:justify">
+Com esse app é possível realizar uma análise econômica. Utilizando o horizonte de planejamento, a taxa de juros ao ano (com limites para a análise de sensibilidade) e valores de receitas e custos anuais.
+</div>
+
+
 Conheça nossos outros projetos:
 [App Inventário de Nativas](http://52.87.251.141/shiny/nativas_app/),
 [App Inventário Florestal](http://52.87.251.141/shiny/inventario_app/),
