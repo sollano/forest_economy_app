@@ -27,9 +27,12 @@ precisamos de doações para cobrir os custos do servidor que mantêm o app disp
 
 </div>
 
-<p><font size="3">  Para contribuir com o nosso projeto, basta clicar no botão abaixo!</font></p>
+###  Para contribuir com o nosso projeto, basta clicar no botão do PayPal abaixo, ou transferir via PIX, escaneando o código QR!
 
 <div style="text-align:center">
+
+<img src="www/pix_sollano.png" width="150" height="150" />
+
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
 <input type="hidden" name="hosted_button_id" value="JVF7VGRMANRC6" />
