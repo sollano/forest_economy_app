@@ -27,11 +27,17 @@ precisamos de doações para cobrir os custos do servidor que mantêm o app disp
 
 </div>
 
-###  Para contribuir com o nosso projeto, basta clicar no botão do PayPal abaixo, ou transferir via PIX, escaneando o código QR!
+
+###  Contribua com o nosso projeto via PIX por chave ou código QR, ou por cartão de crédito via Paypal:
 
 <div style="text-align:center">
 
+<b><font size="5"> Chave PIX: suiteforest<span>@</span>gmail.com</font></b>
+
+<p><font size="5"> Código QR PIX: </font></p>
 <img src="www/pix_sollano.png" width="150" height="150" />
+
+<b><font size="5"> PayPal </font></b>
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
