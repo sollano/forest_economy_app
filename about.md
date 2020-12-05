@@ -37,7 +37,8 @@ precisamos de doações para cobrir os custos do servidor que mantêm o app disp
 <p><font size="5"> Código QR PIX: </font></p>
 <img src="www/pix_sollano.png" width="150" height="150" />
 
-<b><font size="5"> PayPal </font></b>
+<p><b><font size="5"> PayPal </font></b></p>
+
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
