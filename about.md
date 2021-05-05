@@ -1,32 +1,14 @@
 
 # App Economia Florestal
 
-### Ajude o nosso projeto a se manter no ar!
+## Pessoal, precisamos atingir a meta mensal de R$ 150,00 para manter este app no ar!
 
-<div style="text-align:justify">
-O projeto foi criado com o intuito de ajudar a comunidade florestal. Para continuarmos a mantê-lo de forma gratuita a todos,
-precisamos de doações para cobrir os custos do servidor que mantêm o app disponível. Sua contribuição é de grande ajuda.
-</div>
+Caso essa meta não seja atingida esse mês, precisaremos fechar os apps até conseguirmos.
 
+Contamos com a sua contribuição!
 
-## Apoiadores do Mês de Novembro:
-
-<div><p style="float:left;">
-
-<p><font size="5"> Mariana Miranda Andrade </a></font></p>
-
-<p><font size="5"> Múcio Nepomuceno </a></font></p>
-
-<p><font size="5"> Rauff Barbosa </a></font></p>
-
-<p><font size="5"> Karizen Patriota </a></font></p>
-
-<p><font size="5"> Fernanda Luiza Silva de Oliveira </a></font></p>
-
-<p><font size="5"> Jorge Luiz Mainart </a></font></p>
-
-</div>
-
+Lembrando que via PIX ou paypal, é possível cadastrar um pagamento mensal automático,
+assim todo mês você ajuda um pouco.
 
 ###  Contribua com o nosso projeto via PIX por chave ou código QR, ou por cartão de crédito via Paypal:
 
